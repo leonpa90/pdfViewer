@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 data class Children(
     @SerializedName("data")
-    var `data`: DataX,
+    var photo: Photo,
     @SerializedName("kind")
     var kind: String
 )
