@@ -31,6 +31,13 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    flavorDimensions 'default'
+    productFlavors {
+        dev {
+            buildConfigField 'String', 'SERVER_URL','"https://www.reddit.com/r/"'
+            dimension 'default'
+        }
+    }
 }
 
 dependencies {
