@@ -2,6 +2,8 @@ package com.example.gallery.api
 
 
 import com.example.gallery.BuildConfig
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -14,7 +16,11 @@ object RetrofitClient
     //faccio una funzione per istanziare il client retofit
     private fun getRetrofit():Retrofit
     {
-        return Retrofit.Builder()
+        val client=OkHttpClient.Builder()
+        val logging=HttpLoggingInterceptor()
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY)
+        client.addInterceptor(logging)
+        return Retrofit.Builder().client(client.build())
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASEURL).build()
     }
