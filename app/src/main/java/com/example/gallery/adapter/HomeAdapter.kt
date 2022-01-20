@@ -7,18 +7,19 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.gallery.R
 import com.example.gallery.model.Photo
+import com.example.gallery.utility.setImage
 import kotlinx.android.synthetic.main.photo_row.view.*
 
 class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
 
-    var photoList: MutableList<Photo> = mutableListOf()
+    var photoList: MutableList<Photo?> = mutableListOf()
         set(photolist) {
             field = photolist
             notifyDataSetChanged()
         }
     class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview)
 
-    var onItemClick : (Photo)->Unit = {}
+    var onItemClick : (Int)->Unit = {}
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -32,10 +33,10 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        Glide.with(holder.itemView.context).load(photoList.get(position).url)
-            .into(holder.itemView.photo_imgv)
+
+        photoList.get(position)?.url?.let { holder.itemView.photo_imgv.setImage(it) }
         holder.itemView.setOnClickListener {
-            onItemClick(photoList.get(position))
+            photoList.get(position)?.let { it1 -> onItemClick(position) }
         }
     }
 
