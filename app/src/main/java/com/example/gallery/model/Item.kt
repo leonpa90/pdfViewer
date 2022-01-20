@@ -1,18 +1,19 @@
 package com.example.gallery.model
 
 import com.google.gson.annotations.SerializedName
-import java.io.Serializable
 
-data class Photo(
+data class Item(
     @SerializedName("author_fullname")
-    var authorFullname: String?="",
+    var authorFullname: String?,
     @SerializedName("url")
-    var url: String?=null,
+    var url: String?,
+    @SerializedName("preview")
+    var preview:Preview? = Preview(),
     @SerializedName("title")
-    var title: String?="",
+    var title: String?,
     @SerializedName("id")
-    var id: String?=""
-            ):Serializable
+    var id: String?
+            )
 
 
 
