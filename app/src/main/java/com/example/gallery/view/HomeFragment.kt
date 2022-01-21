@@ -15,6 +15,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.gallery.R
 import com.example.gallery.adapter.HomeAdapter
+import com.example.gallery.utility.hideKeyboard
 import com.example.gallery.viewModel.HomeViewModel
 import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.coroutines.*
@@ -45,9 +46,14 @@ class HomeFragment: Fragment() {
                 }
                     else
                     adapter.photoList = it
+
                   })
 
-
+                modelView.errodata.observe(viewLifecycleOwner, Observer
+                {if(it!=null)
+                {
+                    Toast.makeText(context, "C'è stato un errore!", Toast.LENGTH_SHORT).show()
+                }})
 
 
         searchView.addTextChangedListener {
@@ -57,7 +63,7 @@ class HomeFragment: Fragment() {
             delay(500)
             if(!it.toString().isNullOrEmpty())
             {
-                modelView.searchPhoto(it.toString())
+                context?.let { it1 -> modelView.searchPhoto(it.toString(), it1) }
             }
                 else {
                 adapter.photoList.clear()
@@ -69,6 +75,7 @@ class HomeFragment: Fragment() {
                 adapter.onItemClick={
                     view.findNavController().navigate(R.id.action_homeFragment_to_pagerFragment,
                         bundleOf("photos" to adapter.photoList,"photoposition" to it))
+                    view.hideKeyboard(requireContext())
                 }
 
 

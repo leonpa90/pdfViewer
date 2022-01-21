@@ -1,5 +1,6 @@
 package com.example.gallery.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,7 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
             field = photolist
             notifyDataSetChanged()
         }
-    class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview)
+
 
     var onItemClick : (Int)->Unit = {}
 
@@ -36,12 +37,15 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
 
         photoList.get(position)?.url?.let { holder.itemView.photo_imgv.setImage(it) }
         holder.itemView.setOnClickListener {
-            photoList.get(position)?.let { it1 -> onItemClick(position) }
+             onItemClick(position)
+
+
         }
     }
 
     override fun getItemCount(): Int {
         return photoList.size
     }
+    class MyViewHolder(itemview: View) : RecyclerView.ViewHolder(itemview)
 }
 

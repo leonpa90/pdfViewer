@@ -1,9 +1,12 @@
 package com.example.gallery.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
-
+@Entity
 data class Photo(
+    var query:String="",
     @SerializedName("author_fullname")
     var authorFullname: String?="",
     @SerializedName("url")
@@ -11,7 +14,8 @@ data class Photo(
     @SerializedName("title")
     var title: String?="",
     @SerializedName("id")
-    var id: String?=""
+    @PrimaryKey
+    var id: String=""
             ):Serializable
 
 

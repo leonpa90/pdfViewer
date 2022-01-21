@@ -16,7 +16,5 @@ class PageDapater(fragmentActivity:Fragment,var photos:List<Photo>):FragmentStat
     }
 
     override fun createFragment(position: Int): Fragment {
-        val fragment: PagerItemFragment= PagerItemFragment()
-        fragment.arguments= bundleOf("photo" to photos.get(position))
-        return fragment }
+        return PagerItemFragment().apply { arguments= bundleOf("photo" to photos.get(position)) } }
     }
