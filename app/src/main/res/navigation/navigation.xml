@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
     app:startDestination="@id/homeFragment">
 
@@ -15,9 +16,20 @@
             app:exitAnim="@anim/fragment_close_exit"
             app:popEnterAnim="@anim/nav_default_pop_enter_anim"
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+        <action
+            android:id="@+id/action_homeFragment_to_preferitiFragment"
+            app:destination="@id/preferitiFragment" />
     </fragment>
     <fragment
         android:id="@+id/pagerFragment"
         android:name="com.example.gallery.view.PagerFragment"
         android:label="PagerFragment" />
+    <fragment
+        android:id="@+id/preferitiFragment"
+        android:name="com.example.gallery.view.PreferitiFragment"
+        android:label="PreferitiFragment" >
+        <action
+            android:id="@+id/action_preferitiFragment_to_pagerFragment"
+            app:destination="@id/pagerFragment" />
+    </fragment>
 </navigation>

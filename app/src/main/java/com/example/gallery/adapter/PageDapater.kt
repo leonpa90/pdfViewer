@@ -18,3 +18,4 @@ class PageDapater(fragmentActivity:Fragment,var photos:List<Photo>):FragmentStat
     override fun createFragment(position: Int): Fragment {
         return PagerItemFragment().apply { arguments= bundleOf("photo" to photos.get(position)) } }
     }
+

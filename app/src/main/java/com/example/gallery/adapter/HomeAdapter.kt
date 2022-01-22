@@ -17,10 +17,10 @@ class HomeAdapter : RecyclerView.Adapter<HomeAdapter.MyViewHolder>() {
         set(photolist) {
             field = photolist
             notifyDataSetChanged()
+
         }
 
-
-    var onItemClick : (Int)->Unit = {}
+    var onItemClick : (Int)->Unit ={}
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {

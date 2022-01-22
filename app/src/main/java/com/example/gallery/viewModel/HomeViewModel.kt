@@ -19,6 +19,8 @@ import retrofit2.Response
 
 class HomeViewModel:ViewModel()
 {
+    //ho usato la mutablelivedata anziche livedata soltanto, perche altrimenti avrei dovuto vrare
+    // sia un oggetto livedqta che un oggetto mutable ed esporre alla view il livedata e settare il valore nella mutable
     var photoData : MutableLiveData<MutableList<Photo?>> = MutableLiveData()
     var errodata:   MutableLiveData<Throwable> = MutableLiveData()
 
@@ -27,7 +29,8 @@ class HomeViewModel:ViewModel()
         //creo l'istanza del database
         val databases:DatabseImp= DatabseImp.createDatabase(context)
         CoroutineScope(Dispatchers.IO).launch { databases.photoDao().getDati(query).
-        let { CoroutineScope(Dispatchers.Main).launch { photoData.value=it }}
+        let {
+            CoroutineScope(Dispatchers.Main).launch { photoData.value=it }}
 
         }
         RetrofitClient.apiServices.searchPhotos(query).enqueue(object : retrofit2.Callback<PhotoResponse>{
@@ -35,10 +38,14 @@ class HomeViewModel:ViewModel()
 // uso le extension per mappare la lista delle photo e faccio la lettura della response
               photoData.value=  response.body()?.content?.children?.getPhotos()
                 CoroutineScope(Dispatchers.IO).launch {databases.photoDao().
-                insertDati(photoData.value?.map { it?.copy(query = query) }?.toMutableList())   }
+                insertDati(photoData.value?.
+                map {
+                    it?.also { it.query = query } }?.toMutableList())   }
+
             }
 
             override fun onFailure(call: Call<PhotoResponse>, t: Throwable) {
+                //perche in futuro potrei usare qesta eccezione per mostrare un errore specifico
                 errodata.value= t.cause
 
             }

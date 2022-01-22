@@ -13,6 +13,7 @@ data class Photo(
     var url: String?=null,
     @SerializedName("title")
     var title: String?="",
+    var preferiti:Boolean=false,
     @SerializedName("id")
     @PrimaryKey
     var id: String=""

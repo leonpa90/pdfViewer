@@ -10,7 +10,7 @@ fun List<Children>?.getPhotos(): MutableList<Photo?>? {
                 children.item.authorFullname,
                 children.item.preview?.images?.first()?.source?.url?.decode(),
                 children.item.title,
-                it
+                false,it
             )
         }
     }?.filter { !it?.url.isNullOrEmpty() }
