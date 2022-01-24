@@ -5,12 +5,13 @@ import com.example.gallery.model.Photo
 
 fun List<Children>?.getPhotos(): MutableList<Photo?>? {
     val photo = this?.map { children ->
-        children.item.id?.let {
-            Photo("",
+        children.item.id?.let {id->
+            Photo(
+                "",
                 children.item.authorFullname,
                 children.item.preview?.images?.first()?.source?.url?.decode(),
                 children.item.title,
-                false,it
+                false, id
             )
         }
     }?.filter { !it?.url.isNullOrEmpty() }

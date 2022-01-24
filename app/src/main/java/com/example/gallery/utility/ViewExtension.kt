@@ -6,9 +6,9 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 
-fun ImageView.setImage(url: String?){
-    if(url!=null)
-    Glide.with(context).load(url).centerCrop().override(640).into(this)
+fun ImageView.setImage(url: String?) {
+    if (url != null)
+        Glide.with(context).load(url).centerCrop().override(640).into(this)
 }
 
 fun View.hideKeyboard(context: Context) {

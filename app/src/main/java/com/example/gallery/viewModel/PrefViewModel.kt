@@ -9,17 +9,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class PrefViewModel:ViewModel() {
-    var photoData : MutableLiveData<MutableList<Photo?>> = MutableLiveData()
+class PrefViewModel : ViewModel() {
+    var photoData: MutableLiveData<MutableList<Photo?>> = MutableLiveData()
     fun getPreferiti(context: Context) {
 
         val databases: DatabseImp = DatabseImp.createDatabase(context)
         CoroutineScope(Dispatchers.IO).launch {
             databases.photoDao().getPreferiti().let {
-                CoroutineScope(Dispatchers.Main).launch { photoData.value = it }}
-        }
-
-
-
+                photoData.postValue(it)
+            }
         }
     }
+}

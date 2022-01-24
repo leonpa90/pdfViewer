@@ -7,15 +7,17 @@ import androidx.room.Query
 import com.example.gallery.model.Photo
 
 @Dao
-interface Dao {
+interface PhotoDao {
+
     @Query("select * from Photo where `query` in (:query)")
     fun getDati(query : String):MutableList<Photo?>?
+
     @Insert (onConflict = OnConflictStrategy.IGNORE)
     fun insertDati(dati : MutableList<Photo?>?)
+
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     fun inserPref(dati : Photo?)
+
     @Query("select * from Photo where `preferiti` = 1")
     fun getPreferiti(): MutableList<Photo?>?
-
-
 }

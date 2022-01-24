@@ -16,24 +16,22 @@ import com.example.gallery.viewModel.PageViewModel
 import kotlinx.android.synthetic.main.page_layout.*
 import kotlinx.coroutines.CoroutineScope
 
-class PagerItemFragment:Fragment()
-{
+class PagerItemFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.page_layout,container,false)
+        return inflater.inflate(R.layout.page_layout, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        (arguments?.getSerializable("photo")as?Photo)?.let {
+        (arguments?.getSerializable("photo") as? Photo)?.let {
             zoomImage.setImage(it.url)
-            infoImage.text="${it.title}\n ${it.authorFullname}"
+            infoImage.text = "${it.title}\n ${it.authorFullname}"
             ZoomHelper.addZoomableView(zoomImage)
 
-            }
         }
-
     }
+}

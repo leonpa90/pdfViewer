@@ -15,9 +15,7 @@ class PageViewModel:ViewModel()
     //creo l'istanza del database
     val databases: DatabseImp = DatabseImp.createDatabase(context)
     CoroutineScope(Dispatchers.IO).launch {
-        databases.photoDao().inserPref(photo.also { it.preferiti=true }).let {
-
-        }
+        databases.photoDao().inserPref(photo.also { it.preferiti=true })
     }
 }
 }

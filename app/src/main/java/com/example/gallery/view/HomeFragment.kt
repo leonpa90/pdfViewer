@@ -9,7 +9,6 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -48,9 +47,10 @@ class HomeFragment : Fragment() {
                     adapter.photoList = it
 
             })
-                    preferBtn.setOnClickListener{
-                        view.findNavController().navigate(R.id.action_homeFragment_to_preferitiFragment)
-                    }
+
+        preferBtn.setOnClickListener {
+            view.findNavController().navigate(R.id.action_homeFragment_to_preferitiFragment)
+        }
 
         modelView.errodata.observe(viewLifecycleOwner, Observer
         {
@@ -58,7 +58,6 @@ class HomeFragment : Fragment() {
                 Toast.makeText(context, "C'è stato un errore!", Toast.LENGTH_SHORT).show()
             }
         })
-
 
         searchView.addTextChangedListener {
             job?.cancel()
@@ -75,13 +74,12 @@ class HomeFragment : Fragment() {
         }
 
         adapter.onItemClick = {
+            //lancio la navigation per passare i dati tramite bundle per mostrare il dettaglio della photo
             view.findNavController().navigate(
                 R.id.action_homeFragment_to_pagerFragment,
                 bundleOf("photos" to adapter.photoList, "photoposition" to it)
             )
             view.hideKeyboard(requireContext())
         }
-
-
     }
 }

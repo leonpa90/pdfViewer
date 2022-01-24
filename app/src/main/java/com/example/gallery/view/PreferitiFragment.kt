@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.home_fragment.*
 import kotlinx.android.synthetic.main.preferiti_frag.*
 
 
-class PreferitiFragment:Fragment() {
+class PreferitiFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,7 +44,6 @@ class PreferitiFragment:Fragment() {
                 R.id.action_preferitiFragment_to_pagerFragment,
                 bundleOf("photos" to adapter.photoList, "photoposition" to it)
             )
-
         }
     }
 }

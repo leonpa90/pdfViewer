@@ -17,40 +17,40 @@ import okio.ByteString.Companion.encodeUtf8
 import retrofit2.Call
 import retrofit2.Response
 
-class HomeViewModel:ViewModel()
-{
-    //ho usato la mutablelivedata anziche livedata soltanto, perche altrimenti avrei dovuto vrare
-    // sia un oggetto livedqta che un oggetto mutable ed esporre alla view il livedata e settare il valore nella mutable
-    var photoData : MutableLiveData<MutableList<Photo?>> = MutableLiveData()
-    var errodata:   MutableLiveData<Throwable> = MutableLiveData()
+class HomeViewModel : ViewModel() {
 
-    fun searchPhoto(query:String,context: Context)
-    {
+    var photoData: MutableLiveData<MutableList<Photo?>> = MutableLiveData()
+    var errodata: MutableLiveData<Throwable> = MutableLiveData()
+
+    fun searchPhoto(query: String, context: Context) {
         //creo l'istanza del database
-        val databases:DatabseImp= DatabseImp.createDatabase(context)
-        CoroutineScope(Dispatchers.IO).launch { databases.photoDao().getDati(query).
-        let {
-            CoroutineScope(Dispatchers.Main).launch { photoData.value=it }}
-
+        val databases: DatabseImp = DatabseImp.createDatabase(context)
+        CoroutineScope(Dispatchers.IO).launch {
+            databases.photoDao().getDati(query).let {
+               photoData.postValue(it)
+            }
         }
-        RetrofitClient.apiServices.searchPhotos(query).enqueue(object : retrofit2.Callback<PhotoResponse>{
-            override fun onResponse(call: Call<PhotoResponse>, response: Response<PhotoResponse>) {
+        RetrofitClient.apiServices.searchPhotos(query)
+            .enqueue(object : retrofit2.Callback<PhotoResponse> {
+                override fun onResponse(
+                    call: Call<PhotoResponse>,
+                    response: Response<PhotoResponse>
+                ) {
 // uso le extension per mappare la lista delle photo e faccio la lettura della response
-              photoData.value=  response.body()?.content?.children?.getPhotos()
-                CoroutineScope(Dispatchers.IO).launch {databases.photoDao().
-                insertDati(photoData.value?.
-                map {
-                    it?.also { it.query = query } }?.toMutableList())   }
+                    photoData.value = response.body()?.content?.children?.getPhotos()
+                    CoroutineScope(Dispatchers.IO).launch {
+                        photoData.value?.map {
+                            it?.also { it.query = query }
+                        }?.toMutableList()?.let {  databases.photoDao().insertDati(it) }
 
-            }
+                    }
+                }
 
-            override fun onFailure(call: Call<PhotoResponse>, t: Throwable) {
-                //perche in futuro potrei usare qesta eccezione per mostrare un errore specifico
-                errodata.value= t.cause
+                override fun onFailure(call: Call<PhotoResponse>, t: Throwable) {
+                    //perche in futuro potrei usare qesta eccezione per mostrare un errore specifico
+                    errodata.value = t.cause
 
-            }
-
-        })
-
+                }
+            })
     }
 }

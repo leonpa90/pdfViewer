@@ -7,17 +7,14 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitClient
-{
+object RetrofitClient {
     // istanzio la baseurl basata sul flavour settato sul gradle
-    val BASEURL= BuildConfig.SERVER_URL
-
+    val BASEURL = BuildConfig.SERVER_URL
 
     //faccio una funzione per istanziare il client retofit
-    private fun getRetrofit():Retrofit
-    {
-        val client=OkHttpClient.Builder()
-        val logging=HttpLoggingInterceptor()
+    private fun getRetrofit(): Retrofit {
+        val client = OkHttpClient.Builder()
+        val logging = HttpLoggingInterceptor()
         logging.setLevel(HttpLoggingInterceptor.Level.BODY)
         client.addInterceptor(logging)
         return Retrofit.Builder().client(client.build())
@@ -26,7 +23,7 @@ object RetrofitClient
     }
 
     // ho usato by lazy per istanziare solo una volta retorfit
-    val apiServices:ApiService by lazy {
+    val apiServices: ApiService by lazy {
         getRetrofit().create(ApiService::class.java)
     }
 
